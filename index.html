@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>NPS de Aprendizaje · Otoño 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F7F9; --sheet:#FFFFFF; --ink:#16243A; --ink-2:#4A5568; --ink-3:#7A8496; --rule:#DDE1E7;
+  --pro:#2A78D6; --pas:#B7BDC8; --det:#E34948; --accent:#9E1B32; --soft-pro:#E3EEFB; --soft-det:#FCE7E7;
+  --serif:"Newsreader",Georgia,serif; --sans:"Public Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#10161F; --sheet:#18202B; --ink:#EEF1F5; --ink-2:#BCC4D0; --ink-3:#8C96A6; --rule:#2C3644;
+    --pro:#3987E5; --pas:#5B6474; --det:#E66767; --accent:#E06A80; --soft-pro:#1C2D45; --soft-det:#3A2025;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#10161F; --sheet:#18202B; --ink:#EEF1F5; --ink-2:#BCC4D0; --ink-3:#8C96A6; --rule:#2C3644;
+  --pro:#3987E5; --pas:#5B6474; --det:#E66767; --accent:#E06A80; --soft-pro:#1C2D45; --soft-det:#3A2025;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.45;-webkit-font-smoothing:antialiased;overflow:hidden}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;line-height:1.1}
+h2{font-size:38px;max-width:36ch}
+h3{font-size:24px}
+.lead{font-size:21px;color:var(--ink-2);max-width:60ch;margin-top:14px}
+.note{font-size:13.5px;color:var(--ink-3);line-height:1.4}
+b,strong{font-weight:600}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---- deck ---- */
+#deck{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{width:1280px;height:720px;position:relative;transform-origin:center center}
+.slide{position:absolute;inset:0;background:var(--sheet);padding:56px 72px 64px;display:none;flex-direction:column;border-radius:6px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 12px 40px rgba(20,30,50,.08);overflow:hidden}
+.slide.on{display:flex}
+.slide .foot{position:absolute;left:72px;right:72px;bottom:22px;display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-3)}
+.kicker{font-size:14px;color:var(--accent);font-weight:600;margin-bottom:10px}
+.row{display:flex;gap:48px;flex:1;min-height:0;margin-top:26px}
+.col{flex:1;min-width:0;display:flex;flex-direction:column}
+.svgwrap{flex:1;min-height:0;position:relative}
+svg{display:block;width:100%;height:100%;overflow:visible}
+svg text{font-family:var(--sans);fill:var(--ink-2)}
+#nav{position:fixed;bottom:14px;right:18px;display:flex;gap:6px;align-items:center;z-index:5}
+#nav button{font:600 13px var(--sans);background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:4px;padding:7px 12px;cursor:pointer}
+#nav button:hover{border-color:var(--ink-3)}
+#nav button:focus-visible{outline:2px solid var(--pro);outline-offset:2px}
+#count{font-size:13px;color:var(--ink-3);min-width:56px;text-align:center}
+#progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);transition:width .3s ease;z-index:5}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--sheet);font-size:13px;padding:7px 10px;border-radius:4px;max-width:280px;opacity:0;transition:opacity .12s;z-index:10;line-height:1.35}
+[data-tip]{cursor:default}
+
+/* ---- portada ---- */
+.cover{background:var(--ink);color:#fff}
+.cover h1{font-size:64px;max-width:14ch;color:#fff}
+.cover .lead{color:#C9D2DF}
+.cover .kicker{color:#F2A7B4}
+.cover .foot{color:#9AA6B8}
+.cover-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;flex:1;align-items:center}
+.bignum{font-family:var(--serif);font-size:150px;line-height:.9;color:#fff;letter-spacing:-.03em}
+.bignum small{font-size:28px;font-family:var(--sans);color:#C9D2DF;letter-spacing:0;display:block;margin-top:12px;font-weight:500}
+
+/* ---- leyendas ---- */
+.legend{display:flex;gap:22px;flex-wrap:wrap;font-size:14px;color:var(--ink-2);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+
+.qt{width:100%;border-collapse:collapse;margin-top:20px;font-size:15.5px}
+.qt th{text-align:left;font-weight:600;font-size:13px;color:var(--ink-3);padding:8px 12px;border-bottom:2px solid var(--ink)}
+.qt td{padding:11px 12px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
+.qt td b{color:var(--ink)}
+.qt tr.ok td:first-child{box-shadow:inset 3px 0 0 var(--pro)}
+.bdg{display:inline-block;font-size:12.5px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.bdg.y{background:var(--pro);color:#fff}.bdg.y2{background:var(--soft-pro);color:var(--pro)}.bdg.n{background:var(--soft-det);color:var(--det)}
+.nt td,.nt th{text-align:right;vertical-align:middle}.nt td:first-child,.nt th:first-child{text-align:left}
+.nt td.big{font-family:var(--serif);font-size:30px;color:var(--ink)}
+.nt tr.ghost td{color:var(--ink-3)}.nt tr.ghost td.big{color:var(--ink-3)}
+/* ---- tarjetas de cifras ---- */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+.stat{border-top:2px solid var(--ink);padding-top:10px}
+.stat .v{font-family:var(--serif);font-size:44px;line-height:1}
+.stat .l{font-size:14.5px;color:var(--ink-2);margin-top:6px}
+
+/* ---- decisiones ---- */
+.decisions{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:26px;flex:1}
+.dec{border:1px solid var(--rule);border-top:4px solid var(--accent);border-radius:4px;padding:16px 15px;display:flex;flex-direction:column;gap:9px;background:var(--sheet)}
+.dec h3{font-size:19.5px;line-height:1.15}
+.dec p{font-size:14.2px;color:var(--ink-2);line-height:1.4}
+.dec .meta{margin-top:auto;font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:8px;line-height:1.35}
+.dec .meta b{color:var(--ink)}
+.dec .ev{font-size:13px;background:var(--paper);border-radius:3px;padding:7px 8px;color:var(--ink-2)}
+
+.dodont{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:26px}
+.dodont h3{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.dodont ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.dodont li{padding-left:30px;position:relative;font-size:17px;color:var(--ink-2)}
+.dodont li::before{position:absolute;left:0;top:1px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff}
+.yes li::before{content:"✓";background:var(--pro)}
+.no li::before{content:"✕";background:var(--det)}
+.dodont li b{color:var(--ink)}
+
+.targets{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:34px}
+.tg{border-left:3px solid var(--ink);padding-left:16px}
+.tg .lab{font-size:15px;color:var(--ink-2);min-height:44px}
+.tg .bar{position:relative;height:230px;margin-top:10px}
+.tg .vals{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px}
+.tg .now{font-family:var(--serif);font-size:30px;color:var(--ink-3)}
+.tg .goal{font-family:var(--serif);font-size:40px;color:var(--ink)}
+.tg .cap{font-size:12.5px;color:var(--ink-3)}
+
+.quotes{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:22px;flex:1}
+.qcol h3{font-size:20px;display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--rule);margin-bottom:6px}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+blockquote{font-family:var(--serif);font-size:20.5px;line-height:1.35;padding:12px 0 12px 18px;border-left:3px solid var(--rule)}
+blockquote span{display:block;font-family:var(--sans);font-size:12.5px;color:var(--ink-3);margin-top:5px}
+.qa blockquote{border-left-color:var(--pro)} .qb blockquote{border-left-color:var(--det)}
+
+.method{columns:2;column-gap:48px;margin-top:22px;font-size:15px;color:var(--ink-2)}
+.method p{break-inside:avoid;margin-bottom:12px}
+.method b{color:var(--ink)}
+.callout{background:var(--soft-det);border-radius:4px;padding:16px 18px;font-size:16px;color:var(--ink)}
+.callout .big{font-family:var(--serif);font-size:42px;line-height:1;color:var(--det)}
+.callout.blue{background:var(--soft-pro)} .callout.blue .big{color:var(--pro)}
+
+/* ---- modo móvil: lectura vertical ---- */
+@media (max-width:860px){
+  body{overflow:auto;font-size:16px}
+  #deck{position:static;display:block;padding:16px}
+  #stage{width:auto;height:auto;transform:none!important}
+  .slide{position:relative;display:flex!important;padding:28px 18px 78px;margin-bottom:16px;min-height:0}
+  .slide .foot{left:18px;right:18px;bottom:14px}
+  h2{font-size:30px} .cover h1{font-size:40px} .bignum{font-size:96px}
+  .row,.cover-grid,.quotes,.dodont{display:flex;flex-direction:column;gap:22px}
+  .decisions,.targets{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr 1fr}
+  .svgwrap{min-height:300px;flex:none}
+  .method{columns:1}
+  #nav,#progress{display:none}
+}
+@media print{
+  body{overflow:visible;background:#fff}
+  #deck{position:static;display:block}
+  #stage{transform:none!important;width:1280px;height:auto}
+  .slide{position:relative;display:flex!important;box-shadow:none;page-break-after:always;height:720px;border-radius:0}
+  #nav,#progress,#tip{display:none}
+  @page{size:1280px 720px;margin:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.reveal{opacity:0;transform:translateY(6px);transition:opacity .5s ease,transform .5s ease}
+.slide.on .reveal{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="deck"><div id="stage">
+
+<!-- 1 PORTADA -->
+<section class="slide cover" data-title="Portada">
+  <div class="kicker">Evaluación intermedia · Dialogremos Voz · Otoño 2026</div>
+  <div class="cover-grid">
+    <div>
+      <h1>¿Cuánto están aprendiendo nuestros estudiantes?</h1>
+      <p class="lead">Resultados del NPS de aprendizaje, sus factores asociados y lo que dice el estudiantado. Orientaciones para la toma de decisiones.</p>
+      <p class="lead" style="font-size:16px;margin-top:28px">26,227 entrevistas · 3,919 grupos · 2,072 docentes · 81 coordinaciones</p>
+    </div>
+    <div>
+      <div class="bignum num">+41.9<small>NPS de aprendizaje institucional<br><span style="font-size:17px;color:#9AA6B8">rango posible de −100 a +100 · IC95% 41.0 a 42.7</span></small></div>
+    </div>
+  </div>
+  <div class="foot"><span>Dirección de Innovación Educativa · Análisis de resultados</span><span>1</span></div>
+</section>
+
+<!-- A RECOMENDACIÓN -->
+<section class="slide" data-title="Qué preguntas usar">
+  <div class="kicker">Punto de partida · ¿con qué preguntas conviene calcular el NPS?</div>
+  <h2>Recomendamos calcular el NPS solo con aprendizaje (indicador principal) y crecimiento personal (secundario)</h2>
+  <p class="lead" style="font-size:17px;margin-top:8px">El NPS solo tiene sentido si la pregunta evalúa al curso o al docente y si «más alto» siempre es mejor, de modo que un 10 equivalga a un promotor satisfecho. Las otras tres preguntas no cumplen esa lógica.</p>
+  <table class="qt">
+    <thead><tr><th>Pregunta</th><th>¿NPS?</th><th>Por qué</th><th>Mejor alternativa</th></tr></thead>
+    <tbody>
+      <tr class="ok"><td><b>Aprendizaje</b></td><td><span class="bdg y">Sí · principal</span></td><td>Mide el resultado central del curso; 10 es claramente mejor. Buena dispersión (media 8.34).</td><td>NPS</td></tr>
+      <tr class="ok"><td><b>Crecimiento personal</b></td><td><span class="bdg y2">Sí · secundario</span></td><td>Evalúa el curso y «más es mejor». Es la de mayor dispersión (media 8.03).</td><td>NPS</td></tr>
+      <tr><td><b>Exigencia</b></td><td><span class="bdg n">No</span></td><td>Mide qué tan demandante es el curso, no satisfacción: un 10 no equivale a un promotor.</td><td>Distribución baja / adecuada / alta y su relación con aprendizaje</td></tr>
+      <tr><td><b>Asistencia</b></td><td><span class="bdg n">No</span></td><td>Es cumplimiento, no valoración. Techo extremo: 80% responde 10, el NPS daría ~+90 en casi todos los grupos.</td><td>% cumplimiento pleno (10) y % que reporta incumplimiento (≤8)</td></tr>
+      <tr><td><b>Autoevaluación</b></td><td><span class="bdg n">No</span></td><td>Evalúa al estudiante, no al curso ni al docente.</td><td>Variable de control o de contexto</td></tr>
+    </tbody>
+  </table>
+  <div class="foot"><span>Escalas de 1 a 10 · cortes: 9–10 promotor, 7–8 pasivo, 1–6 detractor</span><span></span></div>
+</section>
+
+<!-- B CÓMO QUEDARÍA -->
+<section class="slide" data-title="NPS con datos generales">
+  <div class="kicker">Punto de partida · resultados generales</div>
+  <h2>Cómo quedaría el NPS con los datos generales</h2>
+  <div class="row" style="gap:44px">
+    <div class="col" style="flex:1.25;justify-content:center">
+      <table class="qt nt">
+        <thead><tr><th></th><th>Promotores (9–10)</th><th>Pasivos (7–8)</th><th>Detractores (≤6)</th><th>NPS</th></tr></thead>
+        <tbody>
+          <tr class="ok"><td><b>Aprendizaje</b></td><td class="num">54.3%</td><td class="num">33.2%</td><td class="num">12.5%</td><td class="big num">+41.9</td></tr>
+          <tr class="ok"><td><b>Crecimiento personal</b></td><td class="num">46.2%</td><td class="num">37.2%</td><td class="num">16.6%</td><td class="big num">+29.6</td></tr>
+          <tr class="ghost"><td><i>Asistencia (solo para comparar)</i></td><td class="num">91.8%</td><td class="num">6.6%</td><td class="num">1.6%</td><td class="big num">+90.2</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:14px">n = 26,227 entrevistas. La fila de asistencia muestra el problema: el indicador queda saturado y no distingue entre grupos.</p>
+    </div>
+    <div class="col" style="justify-content:center">
+      <div class="svgwrap" style="flex:none;height:300px"><svg id="gen" viewBox="0 0 480 300" role="img" aria-label="Composición de promotores, pasivos y detractores por pregunta"></svg></div>
+      <div class="legend"><span><i style="background:var(--det)"></i>Detractores</span><span><i style="background:var(--pas)"></i>Pasivos</span><span><i style="background:var(--pro)"></i>Promotores</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>Aprendizaje y crecimiento correlacionan 0.75 (0.84 entre grupos): en el resto de la presentación se usa aprendizaje como indicador único</span><span></span></div>
+</section>
+
+<!-- 2 HEMICICLO -->
+<section class="slide" data-title="De cada 100">
+  <div class="kicker">El indicador</div>
+  <h2>De cada 100 estudiantes, 54 dicen que el curso amplía mucho su aprendizaje y 13 que lo amplía poco</h2>
+  <div class="row">
+    <div class="col" style="flex:1.35">
+      <div class="svgwrap"><svg id="hemi" viewBox="0 0 640 372" role="img" aria-label="Cuadrícula de 100 estudiantes: 54 promotores, 33 pasivos, 13 detractores"></svg></div>
+    </div>
+    <div class="col" style="justify-content:center;gap:20px">
+      <div class="callout blue"><div class="big num">54.3 − 12.5 = +41.9</div><div style="margin-top:8px">NPS = % promotores − % detractores</div></div>
+      <p style="font-size:17px;color:var(--ink-2)">Pregunta base: <i>«¿En qué medida este curso está ampliando tus conocimientos o capacidades?»</i> (escala de 1 a 10).</p>
+      <p style="font-size:17px;color:var(--ink-2)">Es un indicador de <b style="color:var(--ink)">aprendizaje percibido</b>, no de satisfacción ni de recomendación.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Fuente: Dialogremos Voz, evaluación intermedia, 11 sep a 4 oct de 2026</span><span>2</span></div>
+</section>
+
+<!-- 4 DIVISIONES -->
+<section class="slide" data-title="Divisiones y nivel">
+  <div class="kicker">Panorama</div>
+  <h2>Humanidades y Comunicación queda 14 puntos abajo; el posgrado, muy por encima</h2>
+  <div class="row" style="flex-direction:column;gap:6px">
+    <div class="svgwrap"><svg id="divs" viewBox="0 0 1136 400" role="img" aria-label="Distribución de promotores, pasivos y detractores por división y nivel"></svg></div>
+    <div class="legend"><span><i style="background:var(--det)"></i>Detractores (1–6)</span><span><i style="background:var(--pas)"></i>Pasivos (7–8)</span><span><i style="background:var(--pro)"></i>Promotores (9–10)</span></div>
+  </div>
+  <div class="foot"><span>Se omite la División de Estudios Críticos de Género (n = 7) · Humanidades incluye las coordinaciones de formación común (Integración Universitaria, Habilidades Verbales, Reflexión Universitaria)</span><span>4</span></div>
+</section>
+
+<!-- 5 COORDINACIONES -->
+<section class="slide" data-title="Coordinaciones">
+  <div class="kicker">Dispersión</div>
+  <h2>Las seis coordinaciones con NPS más bajo atienden materias de formación común</h2>
+  <div class="row" style="flex-direction:column;gap:4px">
+    <div class="svgwrap"><svg id="strip" viewBox="0 0 1136 400" role="img" aria-label="NPS por coordinación"></svg></div>
+    <div class="legend"><span><i style="background:var(--det);border-radius:50%"></i>Coordinaciones de formación común / servicio</span><span><i style="background:var(--pro);border-radius:50%;opacity:.55"></i>Coordinaciones de programa</span><span style="color:var(--ink-3)">Tamaño del círculo = número de respuestas · solo coordinaciones con 100 o más respuestas (40)</span></div>
+  </div>
+  <div class="foot"><span>Pase el cursor sobre cada círculo para ver la coordinación</span><span>5</span></div>
+</section>
+
+<!-- 6 TRONCO COMÚN -->
+<section class="slide" data-title="Formación común">
+  <div class="kicker">Dónde concentrar el esfuerzo</div>
+  <h2>Las materias de formación común tienen NPS cercano a cero; los talleres de Arquitectura, cerca de +75</h2>
+  <div class="row">
+    <div class="col" style="flex:1.7"><div class="svgwrap"><svg id="mats" viewBox="0 0 760 420" role="img" aria-label="NPS por materia"></svg></div></div>
+    <div class="col" style="gap:18px;justify-content:center">
+      <div class="callout"><div class="big num">9% → 19%</div><div style="margin-top:8px">Integración Universitaria, Escritura Académica y Ser Persona reúnen el <b>9% de las respuestas</b> pero el <b>19% de todos los detractores</b> de la universidad.</div></div>
+      <p style="font-size:16px;color:var(--ink-2)">En Integración Universitaria, 63% de sus grupos cae en el cuartil más bajo de NPS; en Escritura Académica, 50%.</p>
+    </div>
+  </div>
+  <div class="foot"><span>NPS de aprendizaje por materia (todas las respuestas). La línea vertical marca el NPS institucional (+41.9)</span><span>6</span></div>
+</section>
+
+<!-- 7 VARIANZA -->
+<section class="slide" data-title="Dónde está la variación">
+  <div class="kicker">Modelo multinivel</div>
+  <h2>8 de cada 10 diferencias ocurren entre estudiantes del mismo grupo</h2>
+  <div class="row" style="flex-direction:column;gap:22px">
+    <div style="height:170px"><svg id="var" viewBox="0 0 1136 170" role="img" aria-label="Descomposición de la varianza del aprendizaje"></svg></div>
+    <div class="stats">
+      <div class="stat"><div class="v num">80%</div><div class="l">de la variación es entre estudiantes de un mismo grupo: experiencias distintas en la misma aula.</div></div>
+      <div class="stat"><div class="v num">15%</div><div class="l">corresponde al docente y al grupo. Es real, pero con pocas respuestas un NPS individual es muy inestable.</div></div>
+      <div class="stat"><div class="v num">≥10</div><div class="l">respuestas como mínimo para interpretar el NPS de un docente o grupo, siempre con su intervalo de confianza.</div></div>
+    </div>
+  </div>
+  <div class="foot"><span>Modelo nulo con interceptos aleatorios: coordinación, docente, grupo‑docente · n = 25,565 respuestas</span><span>7</span></div>
+</section>
+
+<!-- 8 FOREST -->
+<section class="slide" data-title="Factores asociados">
+  <div class="kicker">¿Qué se asocia con más aprendizaje?</div>
+  <h2>Pesa más el clima del grupo que el perfil del docente</h2>
+  <div class="row" style="gap:36px">
+    <div class="col" style="flex:2.1"><div class="svgwrap"><svg id="forest" viewBox="0 0 820 440" role="img" aria-label="Coeficientes del modelo multinivel"></svg></div></div>
+    <div class="col" style="gap:14px;justify-content:center;font-size:15.5px;color:var(--ink-2)">
+      <p><b style="color:var(--ink)">Cómo leerlo:</b> cada punto es la diferencia en aprendizaje (escala 1–10), manteniendo constantes las demás variables. La línea es el intervalo de confianza del 95%.</p>
+      <p>Los grupos donde el estudiantado percibe <b style="color:var(--ink)">exigencia, cumplimiento y compromiso</b> reportan más aprendizaje.</p>
+      <p>Grupos <b style="color:var(--ink)">más grandes</b> y <b style="color:var(--ink)">en línea</b> reportan menos.</p>
+      <p>Las variables del docente explican muy poco (R² pasa de 0.329 a 0.333). La diferencia por sexo es pequeña y puede reflejar sesgos de percepción: <b style="color:var(--ink)">no debe usarse para decisiones individuales</b>.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Modelo multinivel M4 (estudiante ⊂ grupo ⊂ docente), máxima verosimilitud · asociaciones, no efectos causales</span><span>8</span></div>
+</section>
+
+<!-- 9 VOZ -->
+<section class="slide" data-title="La voz estudiantil">
+  <div class="kicker">Análisis cualitativo de 8,294 respuestas abiertas</div>
+  <h2>Los grupos con NPS alto hablan de ejemplos reales y explicaciones claras; los de NPS bajo piden clases más dinámicas</h2>
+  <div class="row" style="gap:40px">
+    <div class="col"><h3 style="font-size:19px;margin-bottom:4px">«¿Qué ha hecho tu docente que te ayuda a aprender?»</h3><div class="svgwrap"><svg id="db1" viewBox="0 0 540 330" role="img" aria-label="Temas de fortalezas"></svg></div></div>
+    <div class="col"><h3 style="font-size:19px;margin-bottom:4px">«¿Qué le sugerirías a tu docente?»</h3><div class="svgwrap"><svg id="db2" viewBox="0 0 540 330" role="img" aria-label="Temas de sugerencias"></svg></div></div>
+  </div>
+  <div class="legend" style="margin-top:4px"><span><i style="background:var(--pro);border-radius:50%"></i>Grupos NPS alto (cuartil superior, 374 grupos)</span><span><i style="background:var(--det);border-radius:50%"></i>Grupos NPS bajo (cuartil inferior, 374 grupos)</span><span style="color:var(--ink-3)">% de respuestas que mencionan el tema</span></div>
+  <div class="foot"><span>Codificación temática validada por muestreo (precisión 7–10 de 10) · los hallazgos se mantienen al comparar dentro de cada coordinación</span><span>9</span></div>
+</section>
+
+<!-- 10 CITAS -->
+<section class="slide" data-title="En sus palabras">
+  <div class="kicker">En sus palabras</div>
+  <h2>La diferencia se escucha en el aula</h2>
+  <div class="quotes">
+    <div class="qcol qa">
+      <h3><span class="dot" style="background:var(--pro)"></span>Grupos con NPS alto</h3>
+      <blockquote>«Nos da ejemplos reales y práctica que nos permite estudiar las teorías y conceptos desde un enfoque real.»<span>Lo que ayuda a aprender</span></blockquote>
+      <blockquote>«Me ayuda mucho la manera en la que explica, tiene mucha paciencia y si no lo entiendes vuelve a empezar.»<span>Lo que ayuda a aprender</span></blockquote>
+      <blockquote>«Siempre que tengo alguna duda está para mí y la verdad le preocupa mucho que sus alumnos aprendan.»<span>Lo que ayuda a aprender</span></blockquote>
+    </div>
+    <div class="qcol qb">
+      <h3><span class="dot" style="background:var(--det)"></span>Grupos con NPS bajo</h3>
+      <blockquote>«Tener más actividades interactivas, muchas veces es muy tedioso solo escuchar.»<span>Sugerencia</span></blockquote>
+      <blockquote>«Que haga más preguntas rápidas o pequeños retos durante la clase para que todos participemos.»<span>Sugerencia</span></blockquote>
+      <blockquote>«Que tenga más paciencia, que nos enseñe con más lentitud y que no se vaya al siguiente tema sin asegurar que todos estemos en el mismo canal.»<span>Sugerencia</span></blockquote>
+    </div>
+  </div>
+  <div class="foot"><span>Citas textuales seleccionadas al azar entre las respuestas de cada tema; se omiten nombres</span><span>10</span></div>
+</section>
+
+<!-- 11 DECISIONES -->
+<section class="slide" data-title="Decisiones">
+  <div class="kicker">Orientaciones para la toma de decisiones</div>
+  <h2>Cinco decisiones que proponemos</h2>
+  <div class="decisions">
+    <div class="dec"><h3>Adoptar el NPS de aprendizaje como indicador institucional</h3><p>Reportarlo cada periodo por división, departamento y coordinación, con crecimiento personal como complemento.</p><div class="ev">Base: discrimina mejor que las otras preguntas</div><div class="meta"><b>Quién:</b> Vicerrectoría Académica y DIE<br><b>Cuándo:</b> desde Primavera 2027</div></div>
+    <div class="dec"><h3>Plan focalizado en materias de formación común</h3><p>Rediseño didáctico de Integración Universitaria, Escritura Académica, Ser Persona y matemáticas y física básicas, hacia clases activas y ejemplos aplicados.</p><div class="ev">Base: 9% de las respuestas, 19% de los detractores</div><div class="meta"><b>Quién:</b> coordinaciones de servicio<br><b>Cuándo:</b> diseño este semestre, piloto en Primavera 2027</div></div>
+    <div class="dec"><h3>Formación docente en tres prácticas que funcionan</h3><p>Ejemplos y casos reales, explicación con verificación de comprensión y atención paciente a dudas. Aprendizaje entre pares con docentes de grupos con NPS alto.</p><div class="ev">Base: son los temas que más distinguen a los grupos de NPS alto</div><div class="meta"><b>Quién:</b> DIE y departamentos<br><b>Cuándo:</b> intersemestral</div></div>
+    <div class="dec"><h3>Revisar tamaño de grupo y modalidad en línea</h3><p>Analizar las secciones con más de 25 inscritos y las materias en línea con NPS bajo para ajustar cupos o el diseño instruccional.</p><div class="ev">Base: −0.13 puntos por cada 10 inscritos; −0.23 en línea</div><div class="meta"><b>Quién:</b> Dirección de Servicios Escolares y coordinaciones<br><b>Cuándo:</b> programación de Primavera 2027</div></div>
+    <div class="dec"><h3>Retroalimentación formativa, nunca ranking</h3><p>Entregar a cada docente su NPS solo con 10 o más respuestas, con intervalo y comentarios. Acompañamiento a quien tenga NPS bajo en dos periodos seguidos.</p><div class="ev">Base: 80% de la variación ocurre dentro del grupo</div><div class="meta"><b>Quién:</b> jefaturas de departamento<br><b>Cuándo:</b> cada cierre de evaluación</div></div>
+  </div>
+  <div class="foot"><span>Propuesta para discusión del órgano colegiado</span><span>11</span></div>
+</section>
+
+<!-- 12 USO -->
+<section class="slide" data-title="Uso responsable">
+  <div class="kicker">Reglas de uso</div>
+  <h2>Cómo usar (y cómo no usar) el NPS de aprendizaje</h2>
+  <div class="dodont">
+    <div class="yes"><h3><span class="dot" style="background:var(--pro)"></span>Sí</h3><ul>
+      <li><b>Comparar unidades con suficientes respuestas</b> (coordinaciones, departamentos), siempre con su intervalo.</li>
+      <li><b>Seguir la tendencia</b> de una misma unidad entre periodos.</li>
+      <li><b>Leer el número junto con los comentarios</b>: explican el porqué y orientan la mejora.</li>
+      <li><b>Abrir conversaciones formativas</b> con docentes y coordinaciones.</li>
+    </ul></div>
+    <div class="no"><h3><span class="dot" style="background:var(--det)"></span>No</h3><ul>
+      <li><b>Ordenar docentes en un ranking</b> ni usarlo para sanciones.</li>
+      <li><b>Interpretar grupos con menos de 10 respuestas</b>: una sola opinión mueve el NPS más de 10 puntos.</li>
+      <li><b>Comparar materias de formación común con talleres de especialidad</b> sin considerar el contexto.</li>
+      <li><b>Leer como reales diferencias menores a 5 puntos</b>, ni atribuir causas a variables como el sexo del docente.</li>
+    </ul></div>
+  </div>
+  <div class="foot"><span>Participación voluntaria: la tasa de respuesta promedio por grupo es de 56%</span><span>12</span></div>
+</section>
+
+<!-- 13 METAS -->
+<section class="slide" data-title="Metas">
+  <div class="kicker">Seguimiento</div>
+  <h2>Metas sugeridas para Primavera 2027</h2>
+  <div class="targets" id="targets"></div>
+  <p class="note" style="margin-top:22px">Metas propuestas para discusión, calculadas como mejoras alcanzables a partir de la línea base de Otoño 2026. Se recomienda contrastarlas con la evaluación final del semestre.</p>
+  <div class="foot"><span>Línea base: evaluación intermedia Otoño 2026</span><span>13</span></div>
+</section>
+
+<!-- 14 MÉTODO -->
+<section class="slide" data-title="Nota metodológica">
+  <div class="kicker">Nota metodológica</div>
+  <h2>Cómo se hizo este análisis</h2>
+  <div class="method">
+    <p><b>Datos.</b> 26,227 entrevistas de Dialogremos Voz (11 sep a 4 oct de 2026), unidas al catálogo de materias (inscritos, modalidad, tipo de clase; coincidencia del 99.9%) y al de docentes (nómina, sexo, edad, grado; 99.5%).</p>
+    <p><b>NPS.</b> % de 9–10 menos % de 1–6 en la pregunta de aprendizaje (escala 1–10). IC95% por aproximación normal ajustada.</p>
+    <p><b>Correlaciones.</b> Spearman entre las cinco escalas. Aprendizaje y crecimiento: 0.75; las demás entre 0.13 y 0.48.</p>
+    <p><b>Modelo multinivel.</b> Estudiantes dentro de grupo‑docente dentro de docente; interceptos aleatorios; máxima verosimilitud (statsmodels). Modelos anidados M0–M4; se verificó la convergencia con varios optimizadores.</p>
+    <p><b>Análisis cualitativo.</b> Preguntas abiertas 1 y 3. Libro de códigos deductivo‑inductivo con 26 temas, validado por lectura de muestras; términos distintivos por log‑odds; IC por bootstrap de conglomerados. Contraste entre los cuartiles alto y bajo de NPS (grupos con 8 o más respuestas) y, como robustez, el NPS relativo a la coordinación.</p>
+    <p><b>Limitaciones.</b> Participación voluntaria; aprendizaje percibido y no medido; resultados de mitad de semestre; asociaciones, no causas. La codificación automática es aproximada.</p>
+    <p><b>Detalle completo.</b> Archivo Resultados_NPS_Multinivel_Intermedia_O26.xlsx (14 hojas).</p>
+  </div>
+  <div class="foot"><span>Dirección de Innovación Educativa</span><span>14</span></div>
+</section>
+
+</div></div>
+
+<nav id="nav" aria-label="Navegación de diapositivas">
+  <button id="prev" aria-label="Diapositiva anterior">Anterior</button>
+  <span id="count" class="num">1 / 15</span>
+  <button id="next" aria-label="Diapositiva siguiente">Siguiente</button>
+</nav>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const NS='http://www.w3.org/2000/svg';
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function el(tag,attrs,parent,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e}
+const tip=document.getElementById('tip');
+document.addEventListener('mousemove',e=>{const t=e.target.closest('[data-tip]');if(t){tip.innerHTML=t.getAttribute('data-tip');tip.style.opacity=1;const x=Math.min(e.clientX+14,innerWidth-300);tip.style.left=x+'px';tip.style.top=(e.clientY+14)+'px'}else tip.style.opacity=0});
+const fmt=v=>(v>0?'+':'')+v.toFixed(1).replace('.0','.0');
+
+/* ---------- 2 Cuadrícula de 100 ---------- */
+(function(){
+  const s=document.getElementById('hemi');
+  const cat=[...Array(54)].map(()=>'pro').concat([...Array(33)].map(()=>'pas'),[...Array(13)].map(()=>'det'));
+  const lab={pro:'Promotor (9–10)',pas:'Pasivo (7–8)',det:'Detractor (1–6)'};
+  const z=31,g=5,x0=10,y0=12;
+  for(let i=0;i<100;i++){const c=Math.floor(i/10),r=i%10;
+    el('rect',{x:x0+c*(z+g),y:y0+r*(z+g),width:z,height:z,rx:4,fill:`var(--${cat[i]})`,'data-tip':`${lab[cat[i]]}<br>54 · 33 · 13 de cada 100`},s)}
+  const X=400;
+  [['54','promotores · 9–10','--pro'],['33','pasivos · 7–8','--pas'],['13','detractores · 1–6','--det']].forEach((d,i)=>{const y=92+i*112;
+    el('rect',{x:X,y:y-48,width:7,height:60,fill:`var(${d[2]})`},s);
+    el('text',{x:X+22,y:y,'font-size':62,'font-family':'Newsreader',style:'fill:var(--ink)'},s,d[0]);
+    el('text',{x:X+108,y:y-10,'font-size':17},s,d[1])});
+})();
+
+/* ---------- B generales ---------- */
+(function(){
+  const s=document.getElementById('gen');
+  const d=[['Aprendizaje',12.5,33.2,54.3,41.9,1],['Crecimiento',16.6,37.2,46.2,29.6,1],['Asistencia',1.6,6.6,91.8,90.2,0]];
+  const x0=110,x1=470,W=x1-x0;
+  d.forEach((r,i)=>{const y=20+i*92;let x=x0;
+    el('text',{x:x0-12,y:y+30,'text-anchor':'end','font-size':15,style:`fill:var(--ink);font-weight:${r[5]?600:400}`},s,r[0]);
+    [['det',r[1],'Detractores'],['pas',r[2],'Pasivos'],['pro',r[3],'Promotores']].forEach(([c,v,l])=>{const w=W*v/100;
+      el('rect',{x:x+1,y:y+10,width:Math.max(w-2,1),height:38,rx:3,fill:`var(--${c})`,opacity:r[5]?1:.45,'data-tip':`${r[0]}<br>${l}: ${v}%`},s);
+      if(v>9)el('text',{x:x+w/2,y:y+34,'text-anchor':'middle','font-size':13,style:`fill:${c==='pas'?'var(--ink)':'#fff'};font-weight:600`},s,v.toFixed(0)+'%');x+=w});
+    el('text',{x:x0,y:y+70,'font-size':13,style:'fill:var(--ink-2)'},s,'NPS '+fmt(r[4])+(r[5]?'':' · saturado'));
+  });
+})();
+
+/* ---------- 4 Divisiones ---------- */
+(function(){
+  const s=document.getElementById('divs');
+  const d=[['Estudios Sociales',10755,10.4,32.9,56.6,46.2],['Ciencia, Arte y Tecnología',9316,11.1,34.5,54.5,43.4],['Humanidades y Comunicación',6149,18.2,31.7,50.1,31.9],null,['Licenciatura',25498,12.6,33.6,53.8,41.1],['Posgrado',729,6.6,19.1,74.3,67.8]];
+  const x0=270,x1=960,W=x1-x0;let y=14;
+  el('text',{x:x1+40,y:y+4,'font-size':13,style:'fill:var(--ink-3)'},s,'NPS');
+  d.forEach(r=>{ if(!r){y+=22;el('line',{x1:0,x2:1136,y1:y-8,y2:y-8,stroke:css('--rule')},s);return}
+    const h=46;let x=x0;
+    el('text',{x:x0-16,y:y+h/2+2,'text-anchor':'end','font-size':17,style:'fill:var(--ink);font-weight:500'},s,r[0]);
+    el('text',{x:x0-16,y:y+h/2+20,'text-anchor':'end','font-size':12.5},s,'n = '+r[1].toLocaleString('es-MX'));
+    [['det',r[2],'Detractores'],['pas',r[3],'Pasivos'],['pro',r[4],'Promotores']].forEach(([c,v,l],k)=>{
+      const w=W*v/100;el('rect',{x:x+1,y:y+10,width:Math.max(w-2,1),height:h-14,rx:3,fill:`var(--${c})`,'data-tip':`${r[0]}<br>${l}: ${v.toFixed(1)}%`},s);
+      if(v>8)el('text',{x:x+w/2,y:y+h/2+7,'text-anchor':'middle','font-size':14,style:`fill:${c==='pas'?'var(--ink)':'#fff'};font-weight:600`},s,v.toFixed(0)+'%');
+      x+=w});
+    el('text',{x:x1+40,y:y+h/2+10,'font-size':30,'font-family':'Newsreader',style:'fill:var(--ink)'},s,fmt(r[5]));
+    y+=h+16;});
+})();
+
+/* ---------- 5 Strip coordinaciones ---------- */
+(function(){
+  const s=document.getElementById('strip');
+  const C=[["Taller de Integración Universitaria","HyC",1062,4.4],["Habilidades Verbales","HyC",999,12.9],["Física","CAT",448,15.8],["Servicio Social","HyC",313,16.6],["Reflexión Universitaria Eje 3","HyC",380,20.5],["Matemáticas","CAT",1811,23.0],["Reflexión Universitaria Eje 1","HyC",448,29.0],["Ciencias Sociales y Políticas","ES",340,30.9],["Sustentabilidad Ambiental","CAT",102,32.4],["Reflexión Universitaria Eje 4","HyC",302,32.5],["Negocios Internacionales","ES",493,34.3],["Ingeniería Mecánica y Eléctrica","CAT",266,37.2],["Contaduría","ES",689,37.4],["Transformación Digital","CAT",953,38.5],["Filosofía","HyC",140,39.3],["Administración de Empresas","ES",1215,39.4],["Economía Servicio Departamental","ES",362,40.6],["Ingeniería Mecatrónica","CAT",180,40.6],["Historia","HyC",163,42.3],["Ingeniería Industrial","CAT",493,42.8],["Reflexión Universitaria Eje 2","HyC",405,44.2],["Ingeniería Civil","CAT",306,44.4],["Diseño Sensorial y Dirección Creativa","CAT",197,44.7],["Finanzas","ES",808,45.4],["Ingeniería Química","CAT",309,46.9],["Relaciones Internacionales","ES",409,47.9],["Derecho","ES",1894,48.7],["Nutrición y Ciencia de los Alimentos","ES",488,49.6],["Psicología","ES",2017,50.2],["Comunicación","HyC",1039,50.4],["Diseño de Ficciones y Narrativas","CAT",235,50.6],["Diseño Textil","CAT",359,50.7],["Administración de la Hospitalidad","ES",293,51.2],["Mercadotecnia","ES",1202,51.2],["Ing. en Tecnologías de Cómputo","CAT",368,54.1],["Química","CAT",329,54.4],["Arquitectura y Urbanismo","CAT",2307,57.6],["Arte","HyC",269,58.7],["Diseño de Productos y Experiencias","CAT",334,60.8],["Ciencias Religiosas","HyC",185,81.1]];
+  const serv=new Set(["Taller de Integración Universitaria","Habilidades Verbales","Física","Servicio Social","Reflexión Universitaria Eje 3","Matemáticas","Reflexión Universitaria Eje 1","Reflexión Universitaria Eje 4","Reflexión Universitaria Eje 2"]);
+  const x0=40,x1=1100,sc=v=>x0+(x1-x0)*(v/90),base=230;
+  [0,10,20,30,40,50,60,70,80,90].forEach(v=>{el('line',{x1:sc(v),x2:sc(v),y1:60,y2:360,stroke:css('--rule'),'stroke-width':.6},s);el('text',{x:sc(v),y:384,'text-anchor':'middle','font-size':12.5},s,v?'+'+v:'0')});
+  el('line',{x1:sc(41.9),x2:sc(41.9),y1:40,y2:360,stroke:css('--ink'),'stroke-width':1.5},s);
+  el('text',{x:sc(41.9)+6,y:48,'font-size':13,style:'fill:var(--ink);font-weight:600'},s,'Institucional +41.9');
+  // simple beeswarm
+  const placed=[];
+  const rr=n=>4+Math.sqrt(n)*0.42;
+  C.sort((a,b)=>b[2]-a[2]).forEach(c=>{const x=sc(c[3]),r=rr(c[2]);let y=base,step=0;
+    while(placed.some(p=>Math.hypot(p.x-x,p.y-y)<p.r+r+2)){step++;y=base+(step%2?1:-1)*Math.ceil(step/2)*4}
+    placed.push({x,y,r,c})});
+  placed.forEach(p=>{const sv=serv.has(p.c[0]);
+    el('circle',{cx:p.x,cy:p.y,r:p.r,fill:sv?'var(--det)':'var(--pro)','fill-opacity':sv?.9:.5,stroke:css('--sheet'),'stroke-width':2,'data-tip':`<b>${p.c[0]}</b><br>NPS ${fmt(p.c[3])} · ${p.c[2].toLocaleString('es-MX')} respuestas`},s)});
+  const lab=(name,dx,dy,anchor)=>{const p=placed.find(q=>q.c[0]===name);el('line',{x1:p.x,y1:p.y,x2:p.x+dx,y2:p.y+dy,stroke:css('--ink-3'),'stroke-width':.8},s);el('text',{x:p.x+dx+(anchor==='end'?-4:4),y:p.y+dy+4,'text-anchor':anchor||'start','font-size':12.5,style:'fill:var(--ink)'},s,name+' '+fmt(p.c[3]))};
+  lab('Taller de Integración Universitaria',30,-120);lab('Habilidades Verbales',10,110);lab('Ciencias Religiosas',-20,-90,'end');lab('Arquitectura y Urbanismo',30,110);lab('Matemáticas',-10,-110);
+})();
+
+/* ---------- 6 Materias ---------- */
+(function(){
+  const s=document.getElementById('mats');
+  const d=[['Taller de Integración Universitaria',4.4,104,1],['Física 1',8.5,19,1],['Métodos Cuantitativos I',12.8,27,1],['Taller de Escritura Académica',14.3,104,1],['Cálculo I y Taller',14.7,17,1],['Ser Persona',29.0,47,1],null,['Expresión I',71.6,20,0],['Fundamentos de Construcción',74.9,18,0],['Proyectos I (Arquitectura)',75.0,19,0]];
+  const x0=250,x1=730,sc=v=>x0+(x1-x0)*(v/80);let y=10;
+  [0,20,40,60,80].forEach(v=>{el('line',{x1:sc(v),x2:sc(v),y1:0,y2:400,stroke:css('--rule'),'stroke-width':.6},s);el('text',{x:sc(v),y:416,'text-anchor':'middle','font-size':12},s,v?'+'+v:'0')});
+  d.forEach(r=>{if(!r){y+=18;return}
+    el('text',{x:x0-12,y:y+20,'text-anchor':'end','font-size':15,style:'fill:var(--ink)'},s,r[0]);
+    el('text',{x:x0-12,y:y+36,'text-anchor':'end','font-size':11.5},s,r[2]+' grupos');
+    el('rect',{x:x0,y:y+8,width:Math.max(sc(r[1])-x0,3),height:22,rx:3,fill:r[3]?'var(--det)':'var(--pro)','data-tip':`${r[0]}<br>NPS ${fmt(r[1])} · ${r[2]} grupos`},s);
+    el('text',{x:sc(r[1])+8,y:y+25,'font-size':15,style:'fill:var(--ink);font-weight:600'},s,fmt(r[1]));
+    y+=40});
+  el('line',{x1:sc(41.9),x2:sc(41.9),y1:0,y2:400,stroke:css('--ink'),'stroke-width':1.5},s);
+  el('text',{x:sc(41.9)+5,y:-4,'font-size':12.5,style:'fill:var(--ink);font-weight:600'},s,'+41.9 institucional');
+})();
+
+/* ---------- 7 Varianza ---------- */
+(function(){
+  const s=document.getElementById('var');
+  const d=[['Estudiante (dentro del grupo)',80.4,'var(--pas)','var(--ink)'],['Docente',7.9,'var(--pro)','#fff'],['Grupo‑docente',7.1,'#256ABF','#fff'],['Coordinación',4.6,'var(--ink)','var(--sheet)']];
+  let x=0;const W=1136;
+  d.forEach((r,i)=>{const w=W*r[1]/100;
+    el('rect',{x:x+1,y:20,width:w-2,height:84,rx:4,fill:r[2],'data-tip':`${r[0]}: ${r[1]}% de la variación`},s);
+    el('text',{x:x+(i?w/2:24),y:72,'text-anchor':i?'middle':'start','font-size':i?20:28,'font-family':'Newsreader',style:`fill:${r[3]}`},s,r[1].toFixed(i?0:0)+'%');
+    const ly=[136,136,160,136][i], lx=i===3?x+w-2:(i?x+w/2:x+24), an=i===3?'end':(i?'middle':'start');
+    if(i===2)el('line',{x1:x+w/2,x2:x+w/2,y1:108,y2:146,stroke:css('--ink-3'),'stroke-width':.8},s);
+    el('text',{x:lx,y:ly,'text-anchor':an,'font-size':14,style:'fill:var(--ink)'},s,r[0]);
+    x+=w});
+})();
+
+/* ---------- 8 Forest ---------- */
+(function(){
+  const s=document.getElementById('forest');
+  const G=[['Clima del grupo',[['Autoevaluación promedio del grupo (+1 pt)',.681,.641,.720],['Cumplimiento de clases percibido (+1 pt)',.352,.298,.407],['Exigencia percibida del grupo (+1 pt)',.299,.270,.329]]],
+           ['Curso',[['Asesoría (vs. presencial)',.371,.059,.682],['Posgrado (vs. licenciatura)',.030,-.130,.189],['+10 estudiantes inscritos',-.134,-.179,-.090],['En línea (vs. presencial)',-.226,-.442,-.011],['Humanidades y Com. (vs. Est. Sociales)',-.231,-.303,-.159]]],
+           ['Docente',[['Nómina académica (vs. asignatura)',.097,.014,.181],['+10 años de edad',-.056,-.080,-.032],['Doctorado (vs. maestría)',-.078,-.143,-.013],['Docente mujer (vs. hombre)',-.114,-.170,-.059]]]];
+  const x0=330,x1=800,lo=-.5,hi=.8,sc=v=>x0+(x1-x0)*(v-lo)/(hi-lo);
+  let y=8;
+  [-.4,-.2,0,.2,.4,.6,.8].forEach(v=>{el('line',{x1:sc(v),x2:sc(v),y1:0,y2:410,stroke:css(v===0?'--ink-3':'--rule'),'stroke-width':v===0?1.2:.6},s);el('text',{x:sc(v),y:428,'text-anchor':'middle','font-size':12},s,(v>0?'+':'')+v.toFixed(1))});
+  el('text',{x:sc(-.45),y:444,'font-size':11.5,style:'fill:var(--det)'},s,'← menos aprendizaje');
+  el('text',{x:sc(.75),y:444,'text-anchor':'end','font-size':11.5,style:'fill:var(--pro)'},s,'más aprendizaje →');
+  G.forEach(([g,rows])=>{
+    el('text',{x:0,y:y+14,'font-size':13.5,style:'fill:var(--accent);font-weight:700'},s,g);y+=22;
+    rows.forEach(r=>{const sig=r[2]>0||r[3]<0;const col=!sig?'var(--ink-3)':(r[1]>0?'var(--pro)':'var(--det)');
+      el('text',{x:x0-14,y:y+12,'text-anchor':'end','font-size':13.5,style:'fill:var(--ink)'},s,r[0]);
+      el('line',{x1:sc(Math.max(r[2],lo)),x2:sc(r[3]),y1:y+8,y2:y+8,stroke:col,'stroke-width':2.5,'stroke-linecap':'round'},s);
+      el('circle',{cx:sc(r[1]),cy:y+8,r:6.5,fill:col,stroke:css('--sheet'),'stroke-width':2,'data-tip':`${r[0]}<br>${r[1]>0?'+':''}${r[1].toFixed(2)} puntos (IC95% ${r[2].toFixed(2)} a ${r[3].toFixed(2)})${sig?'':'<br>No significativo'}`},s);
+      el('rect',{x:x0,y:y-4,width:x1-x0,height:24,fill:'transparent','data-tip':`${r[0]}<br>${r[1]>0?'+':''}${r[1].toFixed(2)} puntos (IC95% ${r[2].toFixed(2)} a ${r[3].toFixed(2)})`},s);
+      y+=27});
+    y+=6});
+})();
+
+/* ---------- 9 Dumbbells ---------- */
+function dumbbell(id,data,max){
+  const s=document.getElementById(id);const x0=200,x1=520,sc=v=>x0+(x1-x0)*v/max;let y=14;
+  for(let v=0;v<=max;v+=10){el('line',{x1:sc(v),x2:sc(v),y1:0,y2:data.length*46+4,stroke:css('--rule'),'stroke-width':.6},s);el('text',{x:sc(v),y:data.length*46+22,'text-anchor':'middle','font-size':11.5},s,v+'%')}
+  data.forEach(r=>{const [lab,a,b]=r;
+    el('text',{x:x0-12,y:y+12,'text-anchor':'end','font-size':14,style:'fill:var(--ink)'},s,lab);
+    el('line',{x1:sc(Math.min(a,b)),x2:sc(Math.max(a,b)),y1:y+8,y2:y+8,stroke:css('--pas'),'stroke-width':3},s);
+    el('circle',{cx:sc(b),cy:y+8,r:7.5,fill:'var(--det)',stroke:css('--sheet'),'stroke-width':2,'data-tip':`${lab}<br>NPS bajo: ${b.toFixed(1)}%`},s);
+    el('circle',{cx:sc(a),cy:y+8,r:7.5,fill:'var(--pro)',stroke:css('--sheet'),'stroke-width':2,'data-tip':`${lab}<br>NPS alto: ${a.toFixed(1)}%`},s);
+    const d=a-b;el('text',{x:sc(Math.max(a,b))+13,y:y+13,'font-size':12.5,style:`fill:${d>0?'var(--pro)':'var(--det)'};font-weight:700`},s,(d>0?'+':'−')+Math.abs(d).toFixed(0)+' pp');
+    y+=46});
+}
+dumbbell('db1',[['Explicación clara',40.9,29.7],['Ejemplos y vida real',19.4,9.4],['Dinámicas y participación',23.9,20.2],['Paciencia y trato',14.5,10.2],['Atención a dudas',14.4,9.1],['Clase interesante',10.3,5.2]],50);
+dumbbell('db2',[['Nada que cambiar',52.0,28.7],['Clase más dinámica',8.1,17.9],['Más práctica y ejemplos',8.2,12.1],['Explicar con claridad',3.7,8.2],['Ir más despacio',6.1,8.2],['Más paciencia y trato',3.0,7.0]],60);
+
+/* ---------- 13 Metas ---------- */
+(function(){
+  const T=[['NPS de aprendizaje institucional',41.9,45,'+','pts'],['NPS en materias de formación común',12.7,25,'+','pts'],['Detractores (1–6)',12.5,10,'','%'],['Tasa de respuesta promedio por grupo',56,65,'','%']];
+  const box=document.getElementById('targets');
+  T.forEach(([l,now,goal,sg,u])=>{const d=document.createElement('div');d.className='tg';
+    const max=Math.max(now,goal)*1.15;const up=goal>now;
+    d.innerHTML=`<div class="lab">${l}</div><svg class="bar" viewBox="0 0 200 120" preserveAspectRatio="none" style="width:100%;height:230px">
+      <rect x="20" y="${120-120*now/max}" width="60" height="${120*now/max}" rx="3" fill="var(--pas)"></rect>
+      <rect x="110" y="${120-120*goal/max}" width="60" height="${120*goal/max}" rx="3" fill="${up?'var(--pro)':'var(--pro)'}"></rect></svg>
+      <div class="vals"><div><div class="now num">${sg}${now}${u==='%'?'%':''}</div><div class="cap">Otoño 2026</div></div><div style="text-align:right"><div class="goal num">${up?'≥':'≤'} ${sg}${goal}${u==='%'?'%':''}</div><div class="cap">meta Primavera 2027</div></div></div>`;
+    box.appendChild(d)});
+})();
+
+/* ---------- navegación ---------- */
+const slides=[...document.querySelectorAll('.slide')];let cur=0;
+slides.forEach((sl,i)=>{const sp=sl.querySelectorAll('.foot span');if(sp.length)sp[sp.length-1].textContent=i+1});
+const stage=document.getElementById('stage');
+function fit(){if(innerWidth<=860){stage.style.transform='none';return}const k=Math.min(innerWidth/1320,innerHeight/770);stage.style.transform=`scale(${k})`}
+function show(i){cur=Math.max(0,Math.min(slides.length-1,i));slides.forEach((s,k)=>s.classList.toggle('on',k===cur));
+  document.getElementById('count').textContent=`${cur+1} / ${slides.length}`;document.getElementById('progress').style.width=`${100*(cur+1)/slides.length}%`;
+  try{history.replaceState(null,'','#'+(cur+1))}catch(e){}}
+document.getElementById('prev').onclick=()=>show(cur-1);document.getElementById('next').onclick=()=>show(cur+1);
+addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(cur+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(cur-1)}if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1)});
+addEventListener('resize',fit);fit();
+show((parseInt(location.hash.slice(1))||1)-1);
+</script>
+</body>
+</html>
